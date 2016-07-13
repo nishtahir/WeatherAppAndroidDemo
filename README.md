@@ -14,5 +14,4 @@ Thing I would like to add
 
 # Screenshot
 
-![Screenshot_20160713-170334](/uploads/995733e7fbe4ce589491ea39b3df7345/Screenshot_20160713-170334.png)
-
+![Screenshot_20160713-170334](/uploads/68702a126af117c2cc03038ca386fa26/Screenshot_20160713-170334.png)

@@ -26,6 +26,11 @@ public class WeatherAppPresenter implements Presenter {
     @Override
     public void update() {
 
+        if(weatherAppView.getCity().isEmpty()){
+            weatherAppView.displayError("Please enter a city");
+            return;
+        }
+
         weatherService.loadCurrent(weatherAppView.getCity(), new Callback<CurrentWeather>() {
             @Override
             public void onResponse(Call<CurrentWeather> call, Response<CurrentWeather> response) {

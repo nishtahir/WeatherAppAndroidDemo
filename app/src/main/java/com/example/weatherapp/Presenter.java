@@ -7,7 +7,9 @@ import android.app.Activity;
  */
 public interface Presenter {
 
-    void onTakeView(Activity view);
+    void takeView(WeatherAppView view);
 
     void update();
+
+    void onCreate();
 }

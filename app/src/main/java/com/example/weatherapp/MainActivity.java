@@ -10,13 +10,12 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.weatherapp.model.CurrentWeather;
 import com.example.weatherapp.model.Forecast;
 import com.example.weatherapp.model.WeatherData;
-import com.example.weatherapp.service.WeatherService;
+import com.example.weatherapp.api.WeatherService;
 
 import java.util.ArrayList;
 
@@ -25,16 +24,20 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements WeatherAppView{
 
-    EditText editText;
+    private EditText editText;
 
-    ArrayList<WeatherData> forecasts;
+    private WeatherDataAdapter weatherDataAdapter;
 
-    WeatherDataAdapter weatherDataAdapter;
+    private WeatherAppPresenter weatherAppPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        weatherAppPresenter = new WeatherAppPresenter(new WeatherService());
+        weatherAppPresenter.takeView(this);
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
@@ -45,44 +48,12 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                final WeatherService service = new WeatherService();
-
-                String city = editText.getText().toString();
-
-                service.loadForecast(city, new Callback<Forecast>() {
-                    @Override
-                    public void onResponse(Call<Forecast> call, Response<Forecast> response) {
-                        forecasts.clear();
-                        forecasts.addAll(response.body().weather);
-                        weatherDataAdapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onFailure(Call<Forecast> call, Throwable t) {
-                        Toast.makeText(MainActivity.this, "An error occurred while loading the forcast", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                service.loadCurrent(city, new Callback<CurrentWeather>() {
-
-                    @Override
-                    public void onResponse(Call<CurrentWeather> call, Response<CurrentWeather> response) {
-                        weatherDataAdapter.setCurrentWeather(response.body());
-                        weatherDataAdapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onFailure(Call<CurrentWeather> call, Throwable t) {
-                        Toast.makeText(MainActivity.this, "An error occurred while loading the current weather", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                weatherAppPresenter.update();
             }
         });
 
         editText = (EditText) findViewById(R.id.enter_city);
-        forecasts = new ArrayList<>();
-        weatherDataAdapter = new WeatherDataAdapter(this, forecasts);
+        weatherDataAdapter = new WeatherDataAdapter(this);
 
         RecyclerView listView = (RecyclerView) findViewById(R.id.list);
         listView.setLayoutManager(new LinearLayoutManager(this));
@@ -107,4 +78,33 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public String getCity() {
+        return editText.getText().toString();
+    }
+
+    @Override
+    public void setCurrentWeather(CurrentWeather currentWeather) {
+        weatherDataAdapter.setCurrentWeather(currentWeather);
+    }
+
+    @Override
+    public void setForecast(Forecast forecast) {
+        weatherDataAdapter.setForecast(forecast);
+    }
+
+    @Override
+    public void displayError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 }

@@ -1,6 +1,4 @@
-package com.example.weatherapp.service;
-
-import android.util.Log;
+package com.example.weatherapp.api;
 
 import com.example.weatherapp.model.CurrentWeather;
 import com.example.weatherapp.model.Forecast;
@@ -20,7 +18,6 @@ public class WeatherService {
     /**
      * Weather api
      */
-    @Inject
     private OpenWeatherMapAPI openWeatherMapAPI;
 
     public WeatherService() {

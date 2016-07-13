@@ -11,9 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.weatherapp.model.CurrentWeather;
+import com.example.weatherapp.model.Forecast;
 import com.example.weatherapp.model.WeatherData;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -34,9 +36,10 @@ public class WeatherDataAdapter extends RecyclerView.Adapter<WeatherDataAdapter.
 
     Context context;
 
-    public WeatherDataAdapter(Context context, List<WeatherData> ForecastData) {
+
+    public WeatherDataAdapter(Context context) {
         this.context = context;
-        this.forecastData = ForecastData;
+        this.forecastData = new ArrayList<>();
     }
 
     @Override
@@ -103,9 +106,18 @@ public class WeatherDataAdapter extends RecyclerView.Adapter<WeatherDataAdapter.
 
     public void setCurrentWeather(CurrentWeather currentWeather) {
         this.currentWeather = currentWeather;
+        notifyDataSetChanged();
     }
 
+    public void setForecast(Forecast forecast) {
+        forecastData.clear();
+        forecastData.addAll(forecast.weather);
+        notifyDataSetChanged();
+    }
 
+    /**
+     *
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView icon;

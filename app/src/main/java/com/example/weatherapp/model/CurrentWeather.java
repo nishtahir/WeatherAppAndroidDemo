@@ -59,7 +59,7 @@ public class CurrentWeather {
         this.cod = cod;
     }
 
-    class Main {
+    public class Main {
 
         public double temp;
 

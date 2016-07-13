@@ -1,8 +1,5 @@
 package com.example.weatherapp;
 
-
-import android.app.Activity;
-
 import com.example.weatherapp.api.WeatherService;
 import com.example.weatherapp.model.CurrentWeather;
 import com.example.weatherapp.model.Forecast;
@@ -20,7 +17,6 @@ public class WeatherAppPresenter implements Presenter {
     WeatherAppPresenter(WeatherService weatherService){
         this.weatherService = weatherService;
     }
-
 
     @Override
     public void takeView(WeatherAppView view) {

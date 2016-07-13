@@ -21,7 +21,8 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by nish on 7/11/16.
+ * Adapts to two view types. Header is placed at the top of the list
+ * followed by the forecasts.
  */
 public class WeatherDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -106,8 +107,6 @@ public class WeatherDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 return R.drawable.ic_weather_drizzle_24dp;
             case "rain":
                 return R.drawable.ic_weather_heavy_rain_24dp;
-            case "snow":
-                return 0;
             case "clouds":
                 return R.drawable.ic_weather_partly_cloudy_24dp;
             default:
@@ -125,18 +124,10 @@ public class WeatherDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return forecastData.size() + 1;
     }
 
-    public CurrentWeather getCurrentWeather() {
-        return currentWeather;
-    }
-
-    /**
-     * @param currentWeather
-     */
     public void setCurrentWeather(CurrentWeather currentWeather) {
         this.currentWeather = currentWeather;
         notifyDataSetChanged();
     }
-
 
     public void setForecast(Forecast forecast) {
         forecastData.clear();
@@ -144,9 +135,6 @@ public class WeatherDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         notifyDataSetChanged();
     }
 
-    /**
-     *
-     */
     public static class ForecastViewHolder extends RecyclerView.ViewHolder {
 
         ImageView icon;

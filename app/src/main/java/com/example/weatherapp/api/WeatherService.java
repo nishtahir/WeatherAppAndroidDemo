@@ -18,10 +18,11 @@ public class WeatherService {
     /**
      * Weather api
      */
-    private OpenWeatherMapAPI openWeatherMapAPI;
+    OpenWeatherMapAPI api;
 
-    public WeatherService() {
-        openWeatherMapAPI = ServiceFactory.createService(OpenWeatherMapAPI.class);
+    @Inject
+    public WeatherService(OpenWeatherMapAPI api){
+        this.api = api;
     }
 
     /**
@@ -29,17 +30,18 @@ public class WeatherService {
      * @param forecastCallback Thing to do with the thing that you get from the thing.
      */
     public void loadForecast(String location, Callback<Forecast> forecastCallback) {
-        Call<Forecast> test = openWeatherMapAPI.loadForecast(location);
+        Call<Forecast> test = api.loadForecast(location);
         test.enqueue(forecastCallback);
     }
 
     /**
      * Current whether information.
-     * @param location where
+     *
+     * @param location               where
      * @param currentWeatherCallback
      */
     public void loadCurrent(String location, Callback<CurrentWeather> currentWeatherCallback) {
-        Call<CurrentWeather> test = openWeatherMapAPI.loadCurrent(location);
+        Call<CurrentWeather> test = api.loadCurrent(location);
         test.enqueue(currentWeatherCallback);
     }
 
@@ -53,16 +55,18 @@ public class WeatherService {
 
         /**
          * Ref: http://openweathermap.org/forecast16
+         *
          * @param location City name and/or country code
          */
-        @GET("/data/2.5/forecast/daily?mode=json&units="+ units +"&cnt=14&appid=" + APIKEY)
+        @GET("/data/2.5/forecast/daily?mode=json&units=" + units + "&cnt=14&appid=" + APIKEY)
         Call<Forecast> loadForecast(@Query("q") String location);
 
         /**
          * Ref: http://openweathermap.org/current
+         *
          * @param location City name and/or country code
          */
-        @GET("/data/2.5/weather?mode=json&units="+ units +"&appid=" + APIKEY)
+        @GET("/data/2.5/weather?mode=json&units=" + units + "&appid=" + APIKEY)
         Call<CurrentWeather> loadCurrent(@Query("q") String location);
     }
 }

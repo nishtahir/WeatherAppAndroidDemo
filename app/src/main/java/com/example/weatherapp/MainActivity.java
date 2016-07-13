@@ -6,25 +6,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.weatherapp.api.WeatherService;
 import com.example.weatherapp.model.CurrentWeather;
 import com.example.weatherapp.model.Forecast;
-import com.example.weatherapp.model.WeatherData;
-import com.example.weatherapp.api.WeatherService;
 
-import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import javax.inject.Inject;
 
 
 public class MainActivity extends AppCompatActivity implements WeatherAppView{
+
 
     private EditText editText;
 
@@ -32,13 +28,17 @@ public class MainActivity extends AppCompatActivity implements WeatherAppView{
 
     private WeatherAppPresenter weatherAppPresenter;
 
+    @Inject
+    WeatherService weatherService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        weatherAppPresenter = new WeatherAppPresenter(new WeatherService());
-        weatherAppPresenter.takeView(this);
-
         super.onCreate(savedInstanceState);
+
+        ((WeatherAppApplication) getApplication()).getNetworkComponent().inject(this);
+
+        weatherAppPresenter = new WeatherAppPresenter(weatherService);
+        weatherAppPresenter.takeView(this);
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements WeatherAppView{
         RecyclerView listView = (RecyclerView) findViewById(R.id.list);
         listView.setLayoutManager(new LinearLayoutManager(this));
         listView.setAdapter(weatherDataAdapter);
+
     }
 
     @Override

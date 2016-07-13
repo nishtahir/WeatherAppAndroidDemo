@@ -5,11 +5,12 @@ Uses open weather map api to display the weather of a given location.
 ## Uses
 
 * Retrofit 2
+* Dagger 2
 * MVP
 
 Thing I would like to add 
 
-* Dagger
+* More dagger
 * Rx
 
 # Screenshot

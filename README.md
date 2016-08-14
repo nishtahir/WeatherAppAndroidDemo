@@ -17,4 +17,4 @@ Thing I would like to add
 
 # Screenshot
 
-![Screenshot_20160713-170334](/uploads/68702a126af117c2cc03038ca386fa26/Screenshot_20160713-170334.png)
+![image](https://cloud.githubusercontent.com/assets/2018617/17648815/2b2cd624-622c-11e6-950b-d559f3002073.png)

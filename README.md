@@ -1,6 +1,8 @@
 # Weather app Android
+This was an interview test to demonstrate my capacity to deliver a working application
+under a time limit (about 3-4 hours) and other constraints.
 
-Uses open weather map api to display the weather of a given location.
+It uses [open weather map api](http://openweathermap.org/api) to display the weather of a given location.
 
 ## Uses
 
